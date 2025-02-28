@@ -16,6 +16,7 @@ export default function ASCIIMetronome({
   const [position, setPosition] = useState<"left" | "right">("left");
   const lastTickTimeRef = useRef<number>(0);
   const animationFrameRef = useRef<number | null>(null);
+  const initializedRef = useRef<boolean>(false);
 
   // Small timing offset to ensure synchronization with tablature (in milliseconds)
   // This can be adjusted if needed to perfectly match the tablature
@@ -53,6 +54,7 @@ export default function ASCIIMetronome({
         cancelAnimationFrame(animationFrameRef.current);
         animationFrameRef.current = null;
       }
+      initializedRef.current = false;
     } else {
       // Reset timing when starting to play
       lastTickTimeRef.current = 0;
@@ -62,6 +64,35 @@ export default function ASCIIMetronome({
   // Use requestAnimationFrame for more precise timing
   useEffect(() => {
     if (!isPlaying || bpm <= 0) return;
+
+    // Calculate the current beat phase based on the current time
+    // This helps synchronize when the metronome is turned on mid-beat
+    const synchronizeWithCurrentBeat = () => {
+      if (!initializedRef.current) {
+        const msPerBeat = 60000 / bpm;
+        const now = performance.now();
+
+        // Calculate how far we are into the current beat cycle
+        const currentPhase = now % msPerBeat;
+
+        // If we're more than halfway through a beat, start with the opposite position
+        // This makes the metronome more likely to sync correctly with the tablature
+        if (currentPhase > msPerBeat / 2) {
+          setPosition("right");
+          // Set the lastTickTime to account for the current phase
+          lastTickTimeRef.current = now - currentPhase + SYNC_OFFSET;
+        } else {
+          setPosition("left");
+          // Set the lastTickTime to account for the current phase
+          lastTickTimeRef.current =
+            now - currentPhase - msPerBeat + SYNC_OFFSET;
+        }
+
+        initializedRef.current = true;
+      }
+    };
+
+    synchronizeWithCurrentBeat();
 
     const animate = (timestamp: number) => {
       if (!lastTickTimeRef.current) {
@@ -95,6 +126,7 @@ export default function ASCIIMetronome({
       <pre className="inline-block text-left text-sm">
         {position === "left" ? leftPosition : rightPosition}
       </pre>
+      <div className="text-xs mt-1">{isPlaying ? `${bpm} BPM` : "Paused"}</div>
     </div>
   );
 }

@@ -118,7 +118,13 @@ export default function Home() {
               <HyperButton
                 text={metronomeOn ? "[On]" : "On"}
                 disabled={metronomeOn}
-                onClick={() => setMetronomeOn(true)}
+                onClick={() => {
+                  // Force a small delay before turning on the metronome
+                  // This helps ensure it starts in sync with the tablature
+                  setTimeout(() => {
+                    setMetronomeOn(true);
+                  }, 10);
+                }}
               />
             </div>
 
