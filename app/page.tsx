@@ -4,7 +4,6 @@ import BanjoTablature from '@/components/BanjoTablature';
 import HyperButton from '@/components/HyperButton';
 import RollSelector, { rolls } from '@/components/RollSelector';
 import SpeedControl from '@/components/SpeedControl';
-import Frame from '@/components/frame';
 import { initAudio, playBanjoString } from '@/utils/audio';
 import { useEffect, useState } from 'react';
 
@@ -12,7 +11,6 @@ export default function Home() {
   const [currentRoll, setCurrentRoll] = useState<string>('Forward');
   const [bpm, setBpm] = useState<number>(100);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
-  const [activeNote, setActiveNote] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const [audioInitialized, setAudioInitialized] = useState<boolean>(false);
 
@@ -29,8 +27,6 @@ export default function Home() {
   }, []);
 
   const handleNoteActive = (isActive: boolean, stringNumber?: number) => {
-    setActiveNote(isActive);
-
     // Play sound when a note becomes active and audio is not muted
     if (isActive && stringNumber && !isMuted && audioInitialized) {
       playBanjoString(stringNumber);
@@ -56,7 +52,7 @@ export default function Home() {
   const selectedRoll = rolls.find((r) => r.name === currentRoll) || rolls[0];
 
   return (
-    <div className="pt-6 flex flex-col items-center font-mono w-full max-w-full">
+    <div className="flex flex-col items-center font-mono w-full max-w-full">
       <div className="p-4 w-full">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           {/* Pattern Section - Column 1 */}
@@ -78,7 +74,7 @@ export default function Home() {
           {/* Controls Section - Column 3 */}
           <div>
             <h2 className="font-bold mb-2">Controls</h2>
-            <div className="mb-2 flex flex-row items-center gap-2 flex-wrap">
+            <div className="mb-1 flex flex-row items-center gap-2 flex-wrap">
               <HyperButton
                 text={isPlaying ? 'Pause' : '[Pause]'}
                 disabled={!isPlaying}
@@ -92,7 +88,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4 flex flex-row items-center gap-2 flex-wrap">
               <HyperButton
                 text={isMuted ? '[Muted]' : 'Muted'}
                 disabled={isMuted}

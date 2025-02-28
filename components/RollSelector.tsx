@@ -36,7 +36,7 @@ export const rolls: Roll[] = [
 
 export default function RollSelector({ currentRoll, setCurrentRoll }: RollSelectorProps) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-1">
       {rolls.map((roll, index) => (
         <div key={index.toString()}>
           <HyperButton
