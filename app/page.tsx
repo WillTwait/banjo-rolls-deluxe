@@ -94,14 +94,15 @@ export default function Home() {
             </div>
 
             <div className="mb-1 flex flex-row items-center gap-2 flex-wrap">
+              <div>Sound: </div>
               <HyperButton
-                text={isMuted ? "[Muted]" : "Muted"}
+                text={isMuted ? "[Off]" : "Off"}
                 disabled={isMuted}
                 onClick={toggleMute}
               />
               <span>/</span>
               <HyperButton
-                text={isMuted ? "Sound" : "[Sound]"}
+                text={isMuted ? "On" : "[On]"}
                 disabled={!isMuted}
                 onClick={toggleMute}
               />
