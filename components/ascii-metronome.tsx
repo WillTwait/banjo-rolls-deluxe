@@ -126,7 +126,6 @@ export default function ASCIIMetronome({
       <pre className="inline-block text-left text-sm">
         {position === "left" ? leftPosition : rightPosition}
       </pre>
-      <div className="text-xs mt-1">{isPlaying ? `${bpm} BPM` : "Paused"}</div>
     </div>
   );
 }
