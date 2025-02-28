@@ -13,20 +13,24 @@ export interface Roll {
 
 export const rolls: Roll[] = [
   {
+    name: "Strum",
+    pattern: [5, 4, 3, 2, 1, 5, 4, 3], // Thumb, index, middle pattern
+  },
+  {
     name: "Forward",
-    pattern: [4, 5, 1, 4, 5, 1, 4, 5], // Thumb, index, middle pattern
+    pattern: [2, 1, 5, 2, 1, 5, 2, 1], // Thumb, index, middle pattern
   },
   {
     name: "Backward",
-    pattern: [5, 4, 1, 5, 4, 1, 5, 4], // Middle, index, thumb pattern
+    pattern: [1, 2, 5, 1, 2, 5, 1, 2], // Middle, index, thumb pattern
   },
   {
-    name: "Reverse",
-    pattern: [3, 4, 5, 1, 5, 4, 3, 5], // Classic bluegrass pattern
+    name: "Forward-Reverse",
+    pattern: [3, 2, 1, 5, 1, 2, 3, 1], // Classic bluegrass pattern
   },
   {
-    name: "Foggy Mountain",
-    pattern: [3, 4, 1, 5, 2, 4, 1, 5], // Classic bluegrass pattern
+    name: "Alternating",
+    pattern: [3, 2, 5, 1, 4, 2, 5, 1], // Classic bluegrass pattern
   },
 ];
 
