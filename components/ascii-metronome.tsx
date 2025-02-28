@@ -40,13 +40,6 @@ export default function ASCIIMetronome({
   const leftPosition = leftPositionLines.join("\n");
   const rightPosition = rightPositionLines.join("\n");
 
-  // Reset the metronome when play state changes
-  useEffect(() => {
-    if (!isPlaying) {
-      setPosition("left");
-    }
-  }, [isPlaying]);
-
   // Change position when activeNote changes
   useEffect(() => {
     if (isPlaying && activeNote !== undefined && activeNote !== null) {
