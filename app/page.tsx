@@ -15,6 +15,7 @@ export default function Home() {
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const [metronomeOn, setMetronomeOn] = useState<boolean>(false);
   const [audioInitialized, setAudioInitialized] = useState<boolean>(false);
+  const [activeNote, setActiveNote] = useState<number | null>(null);
 
   // Initialize audio context on first user interaction
   useEffect(() => {
@@ -33,11 +34,19 @@ export default function Home() {
     if (isActive && stringNumber && !isMuted && audioInitialized) {
       playBanjoString(stringNumber);
     }
+
+    // Update the active note for the metronome
+    if (isActive && stringNumber) {
+      setActiveNote(stringNumber);
+    }
   };
 
   // Toggle play/pause state
   const togglePlayback = (playing: boolean) => {
     setIsPlaying(playing);
+    if (!playing) {
+      setActiveNote(null);
+    }
   };
 
   // Toggle mute state
@@ -148,7 +157,11 @@ export default function Home() {
         {/* Metronome Section */}
         {metronomeOn && (
           <div className="mt-6 w-fit mx-auto">
-            <ASCIIMetronome bpm={bpm} isPlaying={isPlaying} className="mt-2" />
+            <ASCIIMetronome
+              activeNote={activeNote}
+              isPlaying={isPlaying}
+              className="mt-2"
+            />
           </div>
         )}
       </div>
