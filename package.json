@@ -4,9 +4,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "format": "biome format --write .",
+    "format": "biome format --write ./src/",
     "lint": "biome lint .",
-    "check": "biome check --apply ."
+    "check": "biome check --apply ./src/"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.1.1",
