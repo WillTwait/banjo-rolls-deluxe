@@ -12,7 +12,7 @@ export default function Home() {
   const [currentRoll, setCurrentRoll] = useState<string>("Forward");
   const [bpm, setBpm] = useState<number>(100);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState<boolean>(true);
   const [metronomeOn, setMetronomeOn] = useState<boolean>(false);
   const [audioInitialized, setAudioInitialized] = useState<boolean>(false);
   const [activeNote, setActiveNote] = useState<number | null>(null);
