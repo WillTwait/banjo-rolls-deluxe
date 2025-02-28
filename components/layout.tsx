@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
-import type { ReactNode } from 'react';
-import Frame from './frame';
+import Link from "next/link";
+import type { ReactNode } from "react";
+import Frame from "./frame";
 
 interface LayoutProps {
   children: ReactNode;
@@ -19,9 +20,24 @@ export default function Layout({ children }: LayoutProps) {
 
           {/* Main Content Frame */}
           <div className={`relative 'h-[75vh]`}>
-            <Frame title="Tab Maker Deluxe" titleSize="lg" minHeight="min-h-[75vh]">
-              <div className={`py-8 px-2 md:p-8 'h-full overflow-hidden`}>{children}</div>
+            <Frame
+              className="font-mono"
+              title="Tab Maker Deluxe"
+              titleSize="lg"
+              minHeight="min-h-[75vh]"
+            >
+              <div className={`py-8 px-2 md:p-8 'h-full overflow-hidden`}>
+                {children}
+              </div>
             </Frame>
+            <div className="text-xs text-right font-mono tracking-tight mt-2">
+              <Link
+                className="border-b border-black hover:border-b-[2px]"
+                href="https://twait.dev"
+              >
+                Made by Will
+              </Link>
+            </div>
           </div>
         </div>
       </div>

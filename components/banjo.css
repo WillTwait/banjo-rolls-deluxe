@@ -1,0 +1,134 @@
+.banjo-tab {
+  font-family: monospace;
+  white-space: pre;
+  font-size: 14px;
+  line-height: 1.2;
+  width: 100%;
+}
+
+.banjo-tab-container {
+  overflow: hidden;
+  padding: 8px;
+  border: 1px solid #000;
+  width: 100%;
+}
+
+.banjo-string {
+  display: flex;
+  height: 24px;
+  width: 100%;
+}
+
+.banjo-string-label {
+  width: 24px;
+  border-right: 1px solid #000;
+  padding-right: 4px;
+  text-align: right;
+  font-weight: bold;
+}
+
+.banjo-string-notes {
+  flex: 1;
+  overflow: hidden;
+  padding-left: 4px;
+  width: calc(100% - 24px);
+}
+
+.banjo-play-line {
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: #000;
+  z-index: 10;
+}
+
+.banjo-note {
+  display: inline-block;
+  width: 8px;
+  text-align: center;
+}
+
+.banjo-note.active {
+  font-weight: bold;
+}
+
+.clickable-text {
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+}
+
+.selected-text {
+  text-decoration: none;
+}
+
+/* Style for selected items in brackets */
+.selected-bracket::before {
+  content: "[";
+}
+
+.selected-bracket::after {
+  content: "]";
+}
+
+/* ASCII-style underline with dashes */
+.ascii-underline {
+  text-decoration: none;
+  position: relative;
+}
+
+.ascii-underline::after {
+  content: "----";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+}
+
+.banjo-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 1px solid #000;
+  margin: 0 4px;
+}
+
+.banjo-indicator.active {
+  background-color: #000;
+}
+
+/* Button hover enhancements */
+button.bg-transparent:hover span.border-b {
+  border-bottom-width: 2px;
+}
+
+button.bg-transparent:hover {
+  font-weight: bold;
+}
+
+/* Make brackets bold by default */
+button span:first-child {
+  font-weight: normal;
+}
+
+/* Style for selected items with brackets */
+span:first-letter[content="["] {
+  font-weight: bold;
+}
+
+/* Make sure buttons respond to hover states */
+button {
+  position: relative;
+  z-index: 1;
+}
+
+/* Make selected items bold */
+[aria-pressed="true"] {
+  font-weight: bold;
+} 
