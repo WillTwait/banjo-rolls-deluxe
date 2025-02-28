@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import BanjoTablature from "@/components/BanjoTablature";
-import HyperButton from "@/components/HyperButton";
-import RollSelector, { rolls } from "@/components/RollSelector";
-import SpeedControl from "@/components/SpeedControl";
-import Frame from "@/components/frame";
-import { initAudio, playBanjoString } from "@/utils/audio";
-import { useEffect, useState } from "react";
+import BanjoTablature from '@/components/BanjoTablature';
+import HyperButton from '@/components/HyperButton';
+import RollSelector, { rolls } from '@/components/RollSelector';
+import SpeedControl from '@/components/SpeedControl';
+import Frame from '@/components/frame';
+import { initAudio, playBanjoString } from '@/utils/audio';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const [currentRoll, setCurrentRoll] = useState<string>("Forward");
+  const [currentRoll, setCurrentRoll] = useState<string>('Forward');
   const [bpm, setBpm] = useState<number>(100);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [activeNote, setActiveNote] = useState<boolean>(false);
@@ -21,11 +21,11 @@ export default function Home() {
     const handleFirstInteraction = () => {
       initAudio();
       setAudioInitialized(true);
-      window.removeEventListener("click", handleFirstInteraction);
+      window.removeEventListener('click', handleFirstInteraction);
     };
 
-    window.addEventListener("click", handleFirstInteraction);
-    return () => window.removeEventListener("click", handleFirstInteraction);
+    window.addEventListener('click', handleFirstInteraction);
+    return () => window.removeEventListener('click', handleFirstInteraction);
   }, []);
 
   const handleNoteActive = (isActive: boolean, stringNumber?: number) => {
@@ -63,10 +63,7 @@ export default function Home() {
           <div>
             <h2 className="font-bold mb-2">Pattern</h2>
             <div>
-              <RollSelector
-                currentRoll={currentRoll}
-                setCurrentRoll={setCurrentRoll}
-              />
+              <RollSelector currentRoll={currentRoll} setCurrentRoll={setCurrentRoll} />
             </div>
           </div>
 
@@ -83,13 +80,13 @@ export default function Home() {
             <h2 className="font-bold mb-2">Controls</h2>
             <div className="mb-2 flex flex-row items-center gap-2 flex-wrap">
               <HyperButton
-                text={isPlaying ? "Pause" : "[Pause]"}
+                text={isPlaying ? 'Pause' : '[Pause]'}
                 disabled={!isPlaying}
                 onClick={() => togglePlayback(false)}
               />
               <span>/</span>
               <HyperButton
-                text={isPlaying ? "[Play]" : "Play"}
+                text={isPlaying ? '[Play]' : 'Play'}
                 disabled={isPlaying}
                 onClick={() => togglePlayback(true)}
               />
@@ -97,13 +94,13 @@ export default function Home() {
 
             <div className="mb-4">
               <HyperButton
-                text={isMuted ? "[Muted]" : "Muted"}
+                text={isMuted ? '[Muted]' : 'Muted'}
                 disabled={isMuted}
                 onClick={toggleMute}
               />
               <span>/</span>
               <HyperButton
-                text={isMuted ? "Sound" : "[Sound]"}
+                text={isMuted ? 'Sound' : '[Sound]'}
                 disabled={!isMuted}
                 onClick={toggleMute}
               />
@@ -112,7 +109,7 @@ export default function Home() {
             <div className="mb-1">
               <div>Pattern: {currentRoll}</div>
               <div>Tempo: {bpm} BPM</div>
-              <div>Sound: {isMuted ? "Off" : "On"}</div>
+              <div>Sound: {isMuted ? 'Off' : 'On'}</div>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { memo, useCallback, useEffect, useRef, useState } from "react";
-import type { Roll } from "./RollSelector";
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import type { Roll } from './RollSelector';
 
 interface BanjoTablatureProps {
   roll: Roll;
@@ -30,7 +30,7 @@ const BanjoString = memo(
   )
 );
 
-BanjoString.displayName = "BanjoString";
+BanjoString.displayName = 'BanjoString';
 
 export default function BanjoTablature({
   roll,
@@ -86,13 +86,11 @@ export default function BanjoTablature({
 
       if (elapsed > msPerBeat) {
         // Calculate the new scroll position
-        const newScrollPosition =
-          (scrollPosition + spacesPerNoteRef.current + 1) % 1000;
+        const newScrollPosition = (scrollPosition + spacesPerNoteRef.current + 1) % 1000;
 
         // Find which string should be played at the NEXT position (looking ahead)
         const nextBeatIndex =
-          Math.floor(newScrollPosition / (spacesPerNoteRef.current + 1)) %
-          notesPerPattern;
+          Math.floor(newScrollPosition / (spacesPerNoteRef.current + 1)) % notesPerPattern;
         const stringToPlay = currentPatternRef.current[nextBeatIndex];
         activeNoteRef.current = stringToPlay;
 
@@ -164,8 +162,7 @@ export default function BanjoTablature({
         // Calculate the effective position in the pattern
         // This creates a scrolling effect by offsetting based on scrollPosition
         let effectivePosition =
-          (col - activeColumnPosition + scrollPosition) %
-          (notesPerPattern * (spacesPerNote + 1));
+          (col - activeColumnPosition + scrollPosition) % (notesPerPattern * (spacesPerNote + 1));
 
         // Add an extra beat of space at the beginning if needed
         if (showInitialSpace && col >= activeColumnPosition) {
@@ -177,8 +174,7 @@ export default function BanjoTablature({
         const isNotePosition = effectivePosition % (spacesPerNote + 1) === 0;
 
         // Calculate which note in the pattern we're displaying
-        const patternIndex =
-          Math.floor(effectivePosition / (spacesPerNote + 1)) % notesPerPattern;
+        const patternIndex = Math.floor(effectivePosition / (spacesPerNote + 1)) % notesPerPattern;
 
         // Check if this string should have a note at this position
         const isActiveString =
@@ -188,19 +184,16 @@ export default function BanjoTablature({
           currentPattern[patternIndex] === stringNum;
 
         // Determine what character to display
-        let char = "-";
+        let char = '-';
         if (isActiveString) {
-          char = "0"; // Open string note
+          char = '0'; // Open string note
         }
 
         // Highlight the active column
         const isBoldColumn = col === activeColumnPosition;
 
         cells.push(
-          <span
-            key={`col-${col}`}
-            className={isBoldColumn ? "font-bold text-lg" : ""}
-          >
+          <span key={`col-${col}`} className={isBoldColumn ? 'font-bold text-lg' : ''}>
             {char}
           </span>
         );

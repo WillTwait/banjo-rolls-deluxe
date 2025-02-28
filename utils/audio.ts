@@ -26,12 +26,12 @@ export function initAudio(): AudioContext {
     if (!audioContext) {
       audioContext = new AudioContext();
       audioInitialized = true;
-    } else if (audioContext.state === "suspended") {
+    } else if (audioContext.state === 'suspended') {
       audioContext.resume();
     }
     return audioContext;
   } catch (error) {
-    console.error("Failed to initialize audio context:", error);
+    console.error('Failed to initialize audio context:', error);
     throw error;
   }
 }
@@ -54,15 +54,15 @@ export function playBanjoString(stringNumber: number, duration = 300): void {
     try {
       initAudio();
     } catch (error) {
-      console.error("Failed to initialize audio context:", error);
+      console.error('Failed to initialize audio context:', error);
       return;
     }
   }
 
   // Make sure the audio context is running
-  if (audioContext?.state === "suspended") {
+  if (audioContext?.state === 'suspended') {
     audioContext.resume().catch((error) => {
-      console.error("Failed to resume audio context:", error);
+      console.error('Failed to resume audio context:', error);
       return;
     });
   }
@@ -82,16 +82,13 @@ export function playBanjoString(stringNumber: number, duration = 300): void {
     const gainNode = audioContext.createGain();
 
     // Configure the oscillator
-    oscillator.type = "triangle"; // Triangle wave sounds a bit like a plucked string
+    oscillator.type = 'triangle'; // Triangle wave sounds a bit like a plucked string
     oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
 
     // Configure the gain (volume envelope)
     gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
     gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
-    gainNode.gain.exponentialRampToValueAtTime(
-      0.001,
-      audioContext.currentTime + duration / 1000
-    );
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration / 1000);
 
     // Connect the nodes
     oscillator.connect(gainNode);
@@ -107,7 +104,7 @@ export function playBanjoString(stringNumber: number, duration = 300): void {
       gainNode.disconnect();
     };
   } catch (error) {
-    console.error("Error playing banjo string:", error);
+    console.error('Error playing banjo string:', error);
   }
 }
 

@@ -1,6 +1,6 @@
-import { memo, useCallback } from "react";
-import type { Dispatch, SetStateAction } from "react";
-import HyperButton from "./HyperButton";
+import { memo, useCallback } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import HyperButton from './HyperButton';
 
 interface SpeedButtonProps {
   amount: number;
@@ -19,7 +19,7 @@ const SpeedButton = memo(({ amount, adjustSpeed }: SpeedButtonProps) => {
   return <HyperButton text={label} disabled={false} onClick={handleClick} />;
 });
 
-SpeedButton.displayName = "SpeedButton";
+SpeedButton.displayName = 'SpeedButton';
 
 interface SpeedControlProps {
   bpm: number;
@@ -28,24 +28,21 @@ interface SpeedControlProps {
 
 // Memoize the SpeedButtonGroup to prevent unnecessary re-renders
 const SpeedButtonGroup = memo(
-  ({
-    amount,
-    adjustSpeed,
-  }: { amount: number; adjustSpeed: (amount: number) => void }) => {
+  ({ amount, adjustSpeed }: { amount: number; adjustSpeed: (amount: number) => void }) => {
     return (
       <div className="flex flex-row">
-        {"["}
+        {'['}
         <div className="flex flex-row gap-4">
           <SpeedButton amount={-amount} adjustSpeed={adjustSpeed} />
           <SpeedButton amount={amount} adjustSpeed={adjustSpeed} />
         </div>
-        {"]"}
+        {']'}
       </div>
     );
   }
 );
 
-SpeedButtonGroup.displayName = "SpeedButtonGroup";
+SpeedButtonGroup.displayName = 'SpeedButtonGroup';
 
 export default function SpeedControl({ bpm, setBpm }: SpeedControlProps) {
   // Memoize the adjustSpeed function to prevent recreating on each render
