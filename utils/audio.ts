@@ -14,14 +14,6 @@ const STRING_FREQUENCIES: Record<number, number> = {
   5: 392.0, // G4 (fifth string - high G drone)
 };
 
-// const STRING_FREQUENCIES: Record<number, number> = {
-//   1: 293.66, // D4 (first string)
-//   2: 246.94, // B3 (second string)
-//   3: 392.0, // G3 (third string)
-//   4: 392.0, // D3 (fourth string)
-//   5: 392.0, // G4 (fifth string)
-// };
-
 // AudioContext singleton
 let audioContext: AudioContext | null = null;
 let audioInitialized = false;
