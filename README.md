@@ -1,3 +1,3 @@
-# Tab Maker Deluxe
+# Banjo Rolls Deluxe
 
-Make tabs. Deluxe.
+Practice banjo rolls. Deluxe.
