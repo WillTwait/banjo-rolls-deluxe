@@ -22,7 +22,7 @@ export default function Layout({ children }: LayoutProps) {
           <div className={`relative 'h-[75vh]`}>
             <Frame
               className="font-mono"
-              title="Tab Maker Deluxe"
+              title="Banjo Rolls Deluxe"
               titleSize="lg"
               minHeight="min-h-[75vh]"
             >

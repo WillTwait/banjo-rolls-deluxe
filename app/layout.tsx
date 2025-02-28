@@ -8,12 +8,12 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://tab-maker-deluxe.twait.dev'),
+  metadataBase: new URL('https://banjo-rolls-deluxe.twait.dev'),
   title: {
-    default: 'Tab Maker Deluxe',
-    template: '%s | Tab Maker Deluxe',
+    default: 'Banjo Rolls Deluxe',
+    template: '%s | Banjo Rolls Deluxe',
   },
-  description: 'Make tabs. Deluxe.',
+  description: 'Practice banjo rolls. Deluxe.',
   icons: {
     icon: '/icon.png',
     shortcut: '/icon.png',
@@ -24,10 +24,10 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Tab Maker Deluxe',
-    description: 'Make tabs. Deluxe.',
-    url: 'https://tab-maker-deluxe.twait.dev',
-    siteName: 'Tab Maker Deluxe',
+    title: 'Banjo Rolls Deluxe',
+    description: 'Practice banjo rolls. Deluxe.',
+    url: 'https://banjo-rolls-deluxe.twait.dev',
+    siteName: 'Banjo Rolls Deluxe',
     locale: 'en_US',
     type: 'website',
   },
