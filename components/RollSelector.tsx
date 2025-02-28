@@ -1,5 +1,5 @@
-import type { Dispatch, SetStateAction } from "react";
-import HyperButton from "./HyperButton";
+import type { Dispatch, SetStateAction } from 'react';
+import HyperButton from './HyperButton';
 
 interface RollSelectorProps {
   currentRoll: string;
@@ -13,27 +13,28 @@ export interface Roll {
 
 export const rolls: Roll[] = [
   {
-    name: "Forward",
-    pattern: [4, 5, 1, 4, 5, 1, 4, 5], // Thumb, index, middle pattern
+    name: 'Strum',
+    pattern: [5, 4, 3, 2, 1, 5, 4, 3], // Thumb, index, middle pattern
   },
   {
-    name: "Backward",
-    pattern: [5, 4, 1, 5, 4, 1, 5, 4], // Middle, index, thumb pattern
+    name: 'Forward',
+    pattern: [2, 1, 5, 2, 1, 5, 2, 1], // Thumb, index, middle pattern
   },
   {
-    name: "Reverse",
-    pattern: [3, 4, 5, 1, 5, 4, 3, 5], // Classic bluegrass pattern
+    name: 'Backward',
+    pattern: [1, 2, 5, 1, 2, 5, 1, 2], // Middle, index, thumb pattern
   },
   {
-    name: "Foggy Mountain",
-    pattern: [3, 4, 1, 5, 2, 4, 1, 5], // Classic bluegrass pattern
+    name: 'Forward-Reverse',
+    pattern: [3, 2, 1, 5, 1, 2, 3, 1], // Classic bluegrass pattern
+  },
+  {
+    name: 'Alternating',
+    pattern: [3, 2, 5, 1, 4, 2, 5, 1], // Classic bluegrass pattern
   },
 ];
 
-export default function RollSelector({
-  currentRoll,
-  setCurrentRoll,
-}: RollSelectorProps) {
+export default function RollSelector({ currentRoll, setCurrentRoll }: RollSelectorProps) {
   return (
     <div className="space-y-2">
       {rolls.map((roll, index) => (

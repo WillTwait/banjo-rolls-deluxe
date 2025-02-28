@@ -1,14 +1,36 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
-import type { Roll } from "../app/banjo/components/RollSelector";
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import type { Roll } from './RollSelector';
 
 interface BanjoTablatureProps {
   roll: Roll;
   bpm: number;
-  onNoteActive?: (isActive: boolean) => void;
+  onNoteActive?: (isActive: boolean, stringNumber?: number) => void;
   customRollPatterns?: Roll[];
 }
+
+// Memoized string component to prevent unnecessary re-renders
+const BanjoString = memo(
+  ({
+    stringNum,
+    cells,
+    isCurrentlyActive,
+  }: {
+    stringNum: number;
+    cells: React.ReactNode[];
+    isCurrentlyActive: boolean;
+  }) => (
+    <div key={`string-${stringNum}`} className="flex">
+      {/* Header part - string number */}
+      <div className="w-6 pr-1 flex-shrink-0 font-mono">|{stringNum}|</div>
+      {/* Live part - scrolling notes */}
+      <div className="flex-grow overflow-hidden font-mono">{cells}</div>
+    </div>
+  )
+);
+
+BanjoString.displayName = 'BanjoString';
 
 export default function BanjoTablature({
   roll,
@@ -23,6 +45,13 @@ export default function BanjoTablature({
   const rollNameRef = useRef(roll.name);
   const spacesPerNoteRef = useRef(3);
   const isPlayingRef = useRef(bpm > 0);
+  const activeNoteRef = useRef<number | null>(null);
+  const bpmRef = useRef(bpm);
+  const currentPatternRef = useRef(roll.pattern);
+
+  // Update refs to avoid dependency issues in animation loop
+  bpmRef.current = bpm;
+  currentPatternRef.current = roll.pattern;
 
   // Get the current pattern
   const currentPattern = roll.pattern;
@@ -46,6 +75,49 @@ export default function BanjoTablature({
     }
   }, [roll.name]);
 
+  // Memoized animation function to prevent recreating on each render
+  const animate = useCallback(
+    (timestamp: number) => {
+      if (!lastTimeRef.current) lastTimeRef.current = timestamp;
+
+      const elapsed = timestamp - lastTimeRef.current;
+      const currentBpm = bpmRef.current;
+      const msPerBeat = 60000 / currentBpm;
+
+      if (elapsed > msPerBeat) {
+        // Calculate the new scroll position
+        const newScrollPosition = (scrollPosition + spacesPerNoteRef.current + 1) % 1000;
+
+        // Find which string should be played at the NEXT position (looking ahead)
+        const nextBeatIndex =
+          Math.floor(newScrollPosition / (spacesPerNoteRef.current + 1)) % notesPerPattern;
+        const stringToPlay = currentPatternRef.current[nextBeatIndex];
+        activeNoteRef.current = stringToPlay;
+
+        // Notify parent of active note when a note hits the active column
+        if (onNoteActive) {
+          onNoteActive(true, stringToPlay);
+          setTimeout(() => {
+            onNoteActive(false);
+          }, 150);
+        }
+
+        // After triggering the sound, update the scroll position
+        setScrollPosition(newScrollPosition);
+
+        // After the first beat, we no longer need to show the initial space
+        if (showInitialSpace) {
+          setShowInitialSpace(false);
+        }
+
+        lastTimeRef.current = timestamp;
+      }
+
+      animationRef.current = requestAnimationFrame(animate);
+    },
+    [scrollPosition, showInitialSpace, notesPerPattern, onNoteActive]
+  );
+
   // Animation effect
   useEffect(() => {
     // Track playing state changes
@@ -67,35 +139,6 @@ export default function BanjoTablature({
       lastTimeRef.current = 0;
     }
 
-    const animate = (timestamp: number) => {
-      if (!lastTimeRef.current) lastTimeRef.current = timestamp;
-
-      const elapsed = timestamp - lastTimeRef.current;
-      const msPerBeat = 60000 / bpm;
-
-      if (elapsed > msPerBeat) {
-        // Move forward by one beat (spacesPerNote + 1 positions)
-        setScrollPosition(
-          (prev) => (prev + spacesPerNoteRef.current + 1) % 1000
-        );
-
-        // After the first beat, we no longer need to show the initial space
-        if (showInitialSpace) {
-          setShowInitialSpace(false);
-        }
-
-        // Notify parent of active note when a note hits the active column
-        if (onNoteActive) {
-          onNoteActive(true);
-          setTimeout(() => onNoteActive(false), 150);
-        }
-
-        lastTimeRef.current = timestamp;
-      }
-
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
     animationRef.current = requestAnimationFrame(animate);
 
     return () => {
@@ -104,14 +147,14 @@ export default function BanjoTablature({
         animationRef.current = null;
       }
     };
-  }, [bpm, onNoteActive, showInitialSpace]);
+  }, [bpm, animate]);
 
-  // Generate the tablature display
-  const renderTablature = () => {
+  // Generate the tablature display - memoized to prevent recalculation on every render
+  const renderTablature = useCallback(() => {
     const strings: React.ReactNode[] = [];
 
-    // Create 5 strings (5 to 1, with 5 at the top)
-    for (let stringNum = 5; stringNum >= 1; stringNum--) {
+    // Create 5 strings (1 to 5, with 1 at the top) - standard tab notation
+    for (let stringNum = 1; stringNum <= 5; stringNum++) {
       const cells: React.ReactNode[] = [];
 
       // Generate the pattern display
@@ -119,8 +162,7 @@ export default function BanjoTablature({
         // Calculate the effective position in the pattern
         // This creates a scrolling effect by offsetting based on scrollPosition
         let effectivePosition =
-          (col - activeColumnPosition + scrollPosition) %
-          (notesPerPattern * (spacesPerNote + 1));
+          (col - activeColumnPosition + scrollPosition) % (notesPerPattern * (spacesPerNote + 1));
 
         // Add an extra beat of space at the beginning if needed
         if (showInitialSpace && col >= activeColumnPosition) {
@@ -132,8 +174,7 @@ export default function BanjoTablature({
         const isNotePosition = effectivePosition % (spacesPerNote + 1) === 0;
 
         // Calculate which note in the pattern we're displaying
-        const patternIndex =
-          Math.floor(effectivePosition / (spacesPerNote + 1)) % notesPerPattern;
+        const patternIndex = Math.floor(effectivePosition / (spacesPerNote + 1)) % notesPerPattern;
 
         // Check if this string should have a note at this position
         const isActiveString =
@@ -143,37 +184,33 @@ export default function BanjoTablature({
           currentPattern[patternIndex] === stringNum;
 
         // Determine what character to display
-        let char = "-";
+        let char = '-';
         if (isActiveString) {
-          char = "0"; // Open string note
+          char = '0'; // Open string note
         }
 
         // Highlight the active column
         const isBoldColumn = col === activeColumnPosition;
 
         cells.push(
-          <span
-            key={`col-${col}`}
-            className={isBoldColumn ? "font-bold text-lg" : ""}
-          >
+          <span key={`col-${col}`} className={isBoldColumn ? 'font-bold text-lg' : ''}>
             {char}
           </span>
         );
       }
 
       strings.push(
-        <div key={`string-${stringNum}`} className="flex">
-          {/* Header part - string number */}
-          <div className="w-6 pr-1 flex-shrink-0 font-mono">|{stringNum}|</div>
-
-          {/* Live part - scrolling notes */}
-          <div className="flex-grow overflow-hidden font-mono">{cells}</div>
-        </div>
+        <BanjoString
+          key={`string-${stringNum}`}
+          stringNum={stringNum}
+          cells={cells}
+          isCurrentlyActive={false}
+        />
       );
     }
 
     return strings;
-  };
+  }, [scrollPosition, showInitialSpace, currentPattern, notesPerPattern]);
 
   return (
     <div className="overflow-hidden w-full">
