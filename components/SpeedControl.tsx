@@ -44,7 +44,7 @@ const SpeedButtonGroup = memo(
 
 SpeedButtonGroup.displayName = 'SpeedButtonGroup';
 
-export default function SpeedControl({ bpm, setBpm }: SpeedControlProps) {
+export default function SpeedControl({ setBpm }: SpeedControlProps) {
   // Memoize the adjustSpeed function to prevent recreating on each render
   const adjustSpeed = useCallback(
     (amount: number) => {
@@ -58,10 +58,11 @@ export default function SpeedControl({ bpm, setBpm }: SpeedControlProps) {
 
   return (
     <div className="font-mono">
-      <div className="space-y-2">
+      <div className="space-y-1">
         <SpeedButtonGroup amount={1} adjustSpeed={adjustSpeed} />
         <SpeedButtonGroup amount={5} adjustSpeed={adjustSpeed} />
         <SpeedButtonGroup amount={10} adjustSpeed={adjustSpeed} />
+        <SpeedButtonGroup amount={50} adjustSpeed={adjustSpeed} />
       </div>
     </div>
   );

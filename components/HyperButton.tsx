@@ -12,7 +12,15 @@ export default function HyperButton({ text, disabled = false, onClick }: HyperBu
       className={`bg-transparent border-0 font-mono text-left ${disabled ? '' : 'cursor-pointer'}`}
       type="button"
     >
-      <span className={disabled ? '' : 'border-b border-black hover:border-b-2'}>{text}</span>
+      <span
+        className={
+          disabled
+            ? ''
+            : 'border-b border-black hover:border-b-2 active:border-b active:border-black duration-75'
+        }
+      >
+        {text}
+      </span>
     </button>
   );
 }
