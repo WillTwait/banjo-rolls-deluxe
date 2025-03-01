@@ -52,6 +52,17 @@ export default function AboutFrame() {
               />
               .
             </div>
+            <div>
+              Source code for the is project can be found on{" "}
+              <HyperButton
+                text="github"
+                onClick={() => {
+                  window.location.href =
+                    "https://github.com/WillTwait/banjo-rolls-deluxe";
+                }}
+              />
+              .
+            </div>
           </div>
         </div>
       </div>
