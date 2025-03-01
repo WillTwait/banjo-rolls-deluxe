@@ -30,18 +30,15 @@ export default function Home() {
   }, []);
 
   const handleNoteActive = (isActive: boolean, stringNumber?: number) => {
-    // Play sound when a note becomes active and audio is not muted
     if (isActive && stringNumber && !isMuted && audioInitialized) {
       playBanjoString(stringNumber);
     }
 
-    // Update the active note for the metronome
     if (isActive && stringNumber) {
       setActiveNote(stringNumber);
     }
   };
 
-  // Toggle play/pause state
   const togglePlayback = (playing: boolean) => {
     setIsPlaying(playing);
     if (!playing) {
@@ -49,9 +46,7 @@ export default function Home() {
     }
   };
 
-  // Toggle mute state
   const toggleMute = () => {
-    // If we're unmuting for the first time, make sure audio is initialized
     if (isMuted && !audioInitialized) {
       initAudio();
       setAudioInitialized(true);
@@ -59,7 +54,6 @@ export default function Home() {
     setIsMuted(!isMuted);
   };
 
-  // Find the current roll object
   const selectedRoll = rolls.find((r) => r.name === currentRoll) || rolls[0];
 
   return (
@@ -129,7 +123,7 @@ export default function Home() {
                 disabled={metronomeOn}
                 onClick={() => {
                   // Force a small delay before turning on the metronome
-                  // This helps ensure it starts in sync with the tablature
+                  // Helps it starts in sync with the tablature
                   setTimeout(() => {
                     setMetronomeOn(true);
                   }, 10);

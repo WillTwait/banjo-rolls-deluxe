@@ -15,7 +15,6 @@ export default function ASCIIMetronome({
 }: ASCIIMetronomeProps) {
   const [position, setPosition] = useState<"left" | "right">("left");
 
-  // Arrays for the ASCII art
   const leftPositionLines = [
     "  \\   --  ",
     "   \\ /  \\  ",
@@ -36,14 +35,11 @@ export default function ASCIIMetronome({
     "    |____|   ",
   ];
 
-  // Join the arrays into strings
   const leftPosition = leftPositionLines.join("\n");
   const rightPosition = rightPositionLines.join("\n");
 
-  // Change position when activeNote changes
   useEffect(() => {
     if (isPlaying && activeNote !== undefined && activeNote !== null) {
-      // Toggle the position whenever a new note becomes active
       setPosition((prev) => (prev === "left" ? "right" : "left"));
     }
   }, [activeNote, isPlaying]);
