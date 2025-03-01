@@ -1,35 +1,35 @@
-import Layout from '@/components/layout';
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
+import Layout from "@/components/layout";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://banjo-rolls-deluxe.twait.dev'),
+  metadataBase: new URL("https://banjo-rolls-deluxe.twait.dev"),
   title: {
-    default: 'Banjo Rolls Deluxe',
-    template: '%s | Banjo Rolls Deluxe',
+    default: "Banjo Rolls Deluxe",
+    template: "%s | Banjo Rolls Deluxe",
   },
-  description: 'Practice banjo rolls. Deluxe.',
+  description: "Practice banjo rolls. Deluxe.",
   icons: {
-    icon: '/icon.png',
-    shortcut: '/icon.png',
-    apple: '/icon.png',
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
     other: {
-      rel: 'apple-touch-icon-precomposed',
-      url: '/icon.png',
+      rel: "apple-touch-icon-precomposed",
+      url: "/icon.png",
     },
   },
   openGraph: {
-    title: 'Banjo Rolls Deluxe',
-    description: 'Practice banjo rolls. Deluxe.',
-    url: 'https://banjo-rolls-deluxe.twait.dev',
-    siteName: 'Banjo Rolls Deluxe',
-    locale: 'en_US',
-    type: 'website',
+    title: "Banjo Rolls Deluxe",
+    description: "Practice banjo rolls. Deluxe.",
+    url: "https://banjo-rolls-deluxe.twait.dev",
+    siteName: "Banjo Rolls Deluxe",
+    locale: "en_US",
+    type: "website",
   },
   robots: {
     index: true,
@@ -37,18 +37,18 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   twitter: {
-    title: 'Desolation Rows',
-    card: 'summary_large_image',
+    title: "Desolation Rows",
+    card: "summary_large_image",
   },
   verification: {
-    google: 'google',
-    yandex: 'yandex',
+    google: "google",
+    yandex: "yandex",
   },
 };
 

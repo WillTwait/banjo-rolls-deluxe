@@ -64,10 +64,7 @@ export default function Home() {
           <div>
             <h2 className="font-bold mb-2">Pattern</h2>
             <div>
-              <RollSelector
-                currentRoll={currentRoll}
-                setCurrentRoll={setCurrentRoll}
-              />
+              <RollSelector currentRoll={currentRoll} setCurrentRoll={setCurrentRoll} />
             </div>
           </div>
 
@@ -151,11 +148,7 @@ export default function Home() {
         {/* Metronome Section */}
         {metronomeOn && (
           <div className="mt-6 w-fit mx-auto">
-            <ASCIIMetronome
-              activeNote={activeNote}
-              isPlaying={isPlaying}
-              className="mt-2"
-            />
+            <ASCIIMetronome activeNote={activeNote} isPlaying={isPlaying} className="mt-2" />
           </div>
         )}
       </div>
