@@ -1,22 +1,26 @@
 interface HyperButtonProps {
   text: string;
-  disabled: boolean;
+  disabled?: boolean;
   onClick: () => void;
 }
 
-export default function HyperButton({ text, disabled = false, onClick }: HyperButtonProps) {
+export default function HyperButton({
+  text,
+  disabled = false,
+  onClick,
+}: HyperButtonProps) {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`bg-transparent border-0 font-mono text-left ${disabled ? '' : 'cursor-pointer'}`}
+      className={`bg-transparent border-0 font-mono text-left ${disabled ? "" : "cursor-pointer"}`}
       type="button"
     >
       <span
         className={
           disabled
-            ? ''
-            : 'border-b border-black hover:border-b-2 active:border-b active:border-black duration-75'
+            ? ""
+            : "border-b border-black hover:border-b-2 active:border-b active:border-black duration-75"
         }
       >
         {text}
