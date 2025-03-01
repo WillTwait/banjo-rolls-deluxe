@@ -53,7 +53,7 @@ export default function AboutFrame() {
               .
             </div>
             <div>
-              Source code for the is project can be found on{" "}
+              Source code for this project can be found on{" "}
               <HyperButton
                 text="github"
                 onClick={() => {
